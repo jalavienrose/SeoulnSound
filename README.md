@@ -21,6 +21,9 @@ Cara saya membuat proyek django baru adalah dengan:
   7. Deployment ke Pacil Web Service (PWS)
   Langkah: Melakukan deploy proyek Django ke PWS agar dapat diakses oleh mahasiswa lain dengan mengikuti prosedur PWS untuk deployment, unggah perubahan ke server, dan memastikan aplikasi dapat diakses melalui internet.
 
+* ***Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.***
+![Bagan request client](https://github.com/user-attachments/assets/4283ae2a-6b46-443a-ae0d-3b341c2b8339)
+
 * ***Jelaskan fungsi git dalam pengembangan perangkat lunak!***
 Git berguna sebagai alat kontrol sistem yang membantu dalam pelacakan setiap perubahan yang terjadi dalam proyek. Git bisa digunakan untuk bekerja sama dalam tim, kembali ke versi sebelumnya, menyimpan catatan perubahan, serta mengatur branch untuk pengembangan fitur tanpa mengganggu proyek utama atau proyek lain.
 
