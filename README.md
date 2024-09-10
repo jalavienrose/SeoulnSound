@@ -23,6 +23,7 @@ Cara saya membuat proyek django baru adalah dengan:
 
 * ***Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.***
 ![Bagan request client](https://github.com/user-attachments/assets/4283ae2a-6b46-443a-ae0d-3b341c2b8339)
+User akan mengakses URL melalui internet lalu akan dilakukan HTTP Request yang akan diterima oleh urls.py, setelah itu urls.py akan mencocokkan URL dengan fungsi yang tepat di views.py. Kita menggunakan template yang akan ditampilkan di views.py, dan memanggil data yang diperlukan dari database melalui models.py, data-data ini diproses di views.py untuk menampilkan halaman yang sesuai.  Setelah itu, tampilan halaman ini dikirim kembali ke pengguna sebagai respons HTTP yang berisi kode HTML.
 
 * ***Jelaskan fungsi git dalam pengembangan perangkat lunak!***
 Git berguna sebagai alat kontrol sistem yang membantu dalam pelacakan setiap perubahan yang terjadi dalam proyek. Git bisa digunakan untuk bekerja sama dalam tim, kembali ke versi sebelumnya, menyimpan catatan perubahan, serta mengatur branch untuk pengembangan fitur tanpa mengganggu proyek utama atau proyek lain.
