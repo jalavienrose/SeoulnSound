@@ -1,9 +1,5 @@
 Nama : Azzahra Salsabila
 NPM : 2306219934
-<<<<<<< HEAD
-Kelas : PBP A
-=======
-
 Kelas : PBP A
 
 * ***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).***
@@ -35,4 +31,3 @@ Django dipilih sebagai awal dalam pembelajaran pengembangan perangkat lunak kare
 
 * ***Mengapa model pada Django disebut sebagai ORM?***
 Model di Django dinamakan sebagai ORM (Object-Relational Mapping) karena berfungsi sebagai penghubung antara database dan kode Python. ORM membantu developer bekerja dengan database dengan menggunakan objek Python dibanding menggunakan query SQL secara langsung. Hal ini membuat manipulasi data menjadi lebih mudah tanpa harus memiliki pengetahuan yang mendalam tentang SQL, dan memastikan konsistensi dan efisiensi interaksi dengan berbagai jenis database.
->>>>>>> a5c3cfa36c62539778a368d668041b920a535182
