@@ -1,9 +1,8 @@
+import uuid
 from django.db import models
 
 class Shop(models.Model):
-    application_name = models.CharField(max_length=255)
-    self_name = models.CharField(max_length=255)
-    pbp_class = models.CharField(max_length=255)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product_name = models.CharField(max_length=255)
     price = models.IntegerField()
     description = models.TextField()
