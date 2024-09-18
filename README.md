@@ -2,6 +2,7 @@ Nama : Azzahra Salsabila
 NPM : 2306219934
 Kelas : PBP A
 
+# TUGAS 2
 * ***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).***
 Cara saya membuat proyek django baru adalah dengan:
   1. Membuat Proyek Django Baru
@@ -57,7 +58,7 @@ Langkah: Mengimport UUID untuk membuat unique identifier pada setiap data yang d
 Langkah: Membuat file ```forms.py``` untuk membuat form input yang berisi product name, price, description, dan rating.
 4. Membuat fungsi ```create_shop_entry```
 Langkah: Lalu membuat fungsi ```create_shop_entry``` yang menerima request lalu menghasilkan form yang dapat menambahkan data yang telah diisi.
-5. Membuat berkas ```create_shop_entry.py```
+5. Membuat berkas ```create_shop_entry.html```
 Langkah: Membuat berkas ```create_shop_entry.html``` sebagai template untuk menampilkan form input yang telah dibuat.
 6. Mengembalikan data dalam bentuk XML, JSON, dan ID
 Langkah: Pada ```views.py``` buat fungsi baru dengan nama ```show_xml, show_json, show_json_by_id, dan show_xml_by_id``` yang mengembalikan data dalam bentuk XML, JSON, dan ID. Lalu di tiap bentuk, tambahkan path url dalam ```urlpatterns``` dan melakukan import.
