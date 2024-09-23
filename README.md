@@ -74,3 +74,12 @@ Langkah: Menginstall postman lalu membuat request baru dengan menginput local ho
 ![alt text](image-2.png)
 4. JSON by ID
 ![alt text](image-3.png)
+
+---
+
+# TUGAS 4
+* ***Apa perbedaan antara HttpResponseRedirect() dan redirect()***
+* ***Jelaskan cara kerja penghubungan model Product dengan User!***
+* ***Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.***
+* ***Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?***
+* ***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).***
