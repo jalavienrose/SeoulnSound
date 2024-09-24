@@ -1,5 +1,6 @@
 import datetime
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.core import serializers
 from django.shortcuts import render, redirect
 from main.forms import ShopEntryForm
@@ -8,17 +9,16 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 
 @login_required(login_url='/login')
 def show_main(request):
     shop_entries = Shop.objects.filter(user=request.user)
 
     context = {
-                'name': request.user.username,
-                "pbp_class": "PBP A",
-                "shop_entries": shop_entries,
-                'last_login': request.COOKIES['last_login'],
+        'name': request.user.username,
+        'pbp_class': "PBP A",
+        'shop_entries': shop_entries,
+        'last_login': request.COOKIES['last_login'],
     }
 
     return render(request, "main.html", context)

@@ -79,7 +79,44 @@ Langkah: Menginstall postman lalu membuat request baru dengan menginput local ho
 
 # TUGAS 4
 * ***Apa perbedaan antara HttpResponseRedirect() dan redirect()***
+Perbedaan antara ```HttpResponseRedirect()``` dan ```redirect()``` adalah, ```HttpResponseRedirect()``` hanya menerima URL dalam bentuk string dan melakukan return respons HTTP dengan kode 302 (Redirect). Sedangkan ```redirect()``` adalah fungsi utilitas yang lebih fleksibel dan mudah digunakan. Selain menerima string URL seperti ```HttpResponseRedirect()```, ```redirect()``` juga bisa menerima nama view, beserta argumen, atau objek model yang otomatis akan diarahkan ke URL yang sesuai dengan metode ```get_absolute_url()```. Dalam syntax, ```redirect()``` lebih ringkas dan mendukung berbagai skenario, sehingga lebih sering digunakan dalam praktik.
+
 * ***Jelaskan cara kerja penghubungan model Product dengan User!***
+ Untuk menghubungan model product, dalam program kali ini yaitu Shop, dengan user, kita dapat menggunakan foreign key. Langkah-langkahnya:
+ 1. Menghubungkan Model ```Shop``` dengan User
+ Langkah ini bertujuan untuk menghubungkan setiap model yang dibuat dengan user. Dengan menambahkan relasi antara model dan model User dengan menggunakan ForeignKey, kita memastikan bahwa setiap model memiliki pemilik yang jelas. Nantinya, model tersebut dapat diidentifikasi berdasarkan siapa yang membuatnya, dan user hanya dapat mengakses model milik mereka sendiri.
+ Langkah ini dilakukan dengan memasukkan kode di bawah
+ ```from django.contrib.auth.models import User```
+ ```class Shop(models.Model):```
+    ```user = models.ForeignKey(User, on_delete=models.CASCADE)```
+ 2. Menambahkan user ke model di fungsi ```create_shop_entry```
+ Langkah ini memastikan bahwa ketika user mengirimkan form untuk membuat model, model tersebut otomatis terintegrasi dengan user yang sedang login. Dengan menambahkan user (```request.user```) ke model sebelum disimpan ke database, kita bisa melacak siapa yang membuat entri tersebut.
+ Langkah ini dilakukan dengan memasukkan kode ```shop_entry.user = request.user```
+ 3. Melakukan filter berdasarkan user
+  Langkah ini memastikan bahwa user hanya dapat melihat model yang mereka buat. Dengan melakukan filter berdasarkan user yang sedang login, kita memastikan bahwa user hanya dapat melihat model yang mereka miliki, dan tidak bisa melihat model milik user lain. Lankah ini dilakukan dengan memasukkan kode ```shop_entries = Shop.objects.filter(user=request.user)```
+
 * ***Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.***
+1. Authentication atau autentikasi adalah proses verifikasi identitas seseorang. Tujuannya untuk memastikan bahwa pengguna yang mengakses adalah orang yang seharusnya. Autentikasi biasanya dilakukan dengan menggunakan username dan password, atau metode lain seperti token, fingerprint, atau biometrik.
+Django mengimplementasikan autentikasi melalui middleware dan model User bawaan. Autentikasi dimulai ketika pengguna mencoba login dengan mengirimkan kredensial, seperti username dan password. Lalu, Django memanfaatkan fungsi authenticate() untuk memeriksa apakah kombinasi tersebut cocok dengan data di database. Jika cocok, fungsi login() digunakan untuk menyimpan informasi pengguna dalam session, sehingga pengguna tetap terotentikasi di seluruh aplikasi. Middleware ```AuthenticationMiddleware``` memastikan bahwa setiap permintaan dari pengguna yang sudah login secara otomatis memiliki objek ```request.user``` yang berisi data pengguna yang aktif. Jika pengguna belum login, ```request.user``` akan diisi dengan AnonymousUser, yang tidak memiliki akses khusus.
+
+2. Authorization atau otorisasi adalah proses untuk menentukan hak atau izin yang dimiliki oleh pengguna untuk mengakses hal tertentu. Otorisasi mengatur apa yang boleh dan yang tidak boleh dilakukan oleh pengguna saat mereka sudah terautentikasi. Otorisasi biasanya dilakukan dengan menggunakan role, group, atau permission yang diberikan kepada pengguna.
+Django menggunakan sistem izin (permissions) dan dekorator (decorators) untuk mengatur akses pengguna berdasarkan hak tertentu. Permissions di Django dapat berupa izin default, seperti add, change, delete, dan view pada model tertentu, atau izin khusus yang bisa diatur sesuai kebutuhan. Untuk mempermudah penerapan otorisasi di tampilan, Django menyediakan dekorator seperti ```@login_required```, yang memastikan hanya pengguna yang telah login yang dapat mengakses tampilan tertentu. Selain itu, dekorator ```@permission_required``` memeriksa apakah pengguna memiliki izin spesifik untuk melakukan tindakan tertentu, misalnya mengedit atau menghapus data. Dengan ini, Django memastikan bahwa pengguna tidak hanya terautentikasi tetapi juga hanya memiliki akses ke sumber daya yang sesuai dengan izin mereka.
+
 * ***Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?***
+Django mengingat pengguna yang telah login dengan menggunakan cookies dan session framework. Saat pengguna berhasil login, Django akan membuat session di sisi server yang menyimpan informasi tentang pengguna, seperti ID pengguna yang sedang aktif. Di sisi klien (browser), Django mengirimkan cookie yang berisi ID sesi (session ID) sebagai pengenal. Setiap kali pengguna mengirimkan permintaan baru (misalnya membuka halaman lain), browser akan mengirimkan kembali cookie ini ke server. Django kemudian menggunakan session ID tersebut untuk mencari data pengguna di server dan mengaitkan pengguna yang sedang login dengan objek ```request.user```.
+Tidak semua cookies aman digunakan, karena ada beberapa faktor keamanan yang perlu dipertimbangkan saat menggunakan cookies seperti session hijacking, XSS, CRSF, dan cookie manipulation. Cookies aman digunakan jika diatur dengan benar, seperti mengaktifkan ```HttpOnly``` dan ```Secure``` flag, serta mengenkripsi data yang sensitif.
+
 * ***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).***
+Cara saya mengimplementasikan checklist di atas adalah dengan:
+1. Membuat fungsi registrasi
+Langkah: Di dalam file ```views.py```, kita mulai dengan mengimpor ```UserCreationForm``` dan modul lain yang diperlukan. Fungsi ini memeriksa apakah request yang diterima adalah POST dan menggunakan ```UserCreationForm``` untuk memvalidasi data yang dimasukkan. Jika data valid, pengguna akan disimpan dan diarahkan ke halaman login dengan pesan sukses. Selanjutnya, kita perlu membuat template registrasi dengan nama ```register.html```, yang berisi formulir untuk mendaftar dan menampilkan pesan sukses jika ada.
+2. Membuat fungsi login
+Langkah: Di dalam ```views.py```, kita mengimpor ```AuthenticationForm```, ```authenticate```, dan ```login```. Kita membuat fungsi ```login_user```, yang menangani input pengguna dan menggunakan authenticate untuk memverifikasi kredensial. Jika autentikasi berhasil, sesi pengguna akan disimpan, dan mereka akan diarahkan ke halaman utama dengan pesan. Untuk mendukung fungsi ini, kita perlu membuat template login ```login.html``` yang berisi formulir login dan tautan ke halaman registrasi.
+3. Membuat fungsi logout
+Langkah: Di ```views.py```, kita mengimpor logout dan membuat fungsi ```logout_user```, yang akan memanggil fungsi logout untuk menghapus sesi pengguna. Setelah logout berhasil, pengguna akan diarahkan ke halaman login dengan pesan konfirmasi. Untuk membuat navigasi yang lebih mudah, kita tambahkan tombol logout di halaman utama.
+4. Melakukan restriksi akses di halaman main
+Langkah: Gunakan decorator ```@login_required``` pada fungsi yang menampilkan halaman tersebut. Decorator ini memastikan bahwa hanya pengguna yang sudah login yang dapat mengakses halaman utama dan yang lainnya akan diarahkan ke halaman login. 
+5. Menggabungkan model dengan user.
+Langkah: Di dalam ```models.py```, kita akan menambahkan field user pada model sebagai ForeignKey yang mengarah ke model User, sehingga setiap produk bisa terkait dengan pengguna tertentu.
+6. Menampilkan informasi pengguna yang sedang login
+Langkah: Dalam fungsi ```show_main```, kita mengambil ```request.user``` untuk mendapatkan informasi pengguna yang sedang login dan menambahkannya ke dalam konteks yang dikirim ke template. Di template halaman utama, kita menambahkan kode untuk menampilkan nama pengguna, sehingga mereka dapat melihat siapa yang sedang login. Kita juga menggunakan cookies dan last login dengan menggunakan ```response.set_cookie('last_login', ...)``` untuk mengatur cookie tersebut. Kemudian, kita akan menampilkan informasi waktu login di halaman utama dengan mengambil nilai cookie ```last_login``` dan menambahkannya ke dalam konteks yang dikirim ke template.
