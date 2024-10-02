@@ -1,6 +1,6 @@
 {% load static %}
 <div class="relative shadow-md rounded-lg mb-6 flex flex-col border-2 transition-transform duration-300 hover:scale-105"
-    style="background-color: #28242c; border-color: #333;">
+    style="background-color: #28242c; border-color: #333; width: 100%; max-width: 300px; overflow: hidden;">
 
     <div class="p-4">
         <img src="{% static 'image/album.jpeg' %}" alt="K-product" class="w-32 h-32 mx-auto rounded-md">
@@ -8,13 +8,13 @@
 
     <div class="text-center p-4">
         <h3 class="font-bold text-xl mb-2 text-white">{{ shop_entry.product_name }}</h3>
-        <p class="text-gray-400">{{ shop_entry.rating }} Rating</p>
+        <p class="text-gray-400">Rating: {{ shop_entry.rating }}</p>
         <p class="text-white mb-2">
           <span class="bg-[linear-gradient(to_bottom,transparent_0%,transparent_calc(100%_-_1px),#CDC1FF_calc(100%_-_1px))] bg-[length:100%_1.5rem] pb-1">{{shop_entry.description}}</span>
         </p>
     </div>
 
-    <div class="flex justify-between items-center p-4 mt-auto">
+    <div class="flex justify-between items-center p-4 mt-5">
         <p class="text-xl font-bold" style="color: #d5e90b;">Rp{{ shop_entry.price }}</p>
         <div class="flex space-x-2">
             <a href="{% url 'main:edit_shop' shop_entry.pk %}" class="text-white hover:text-white">

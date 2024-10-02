@@ -145,21 +145,24 @@ Contoh aplikasi yang sudah menerapkan responsive design adalah Google, Facebook,
 ***Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!***
 1. Margin digunakan untuk memberikan jarak antara elemen dengan elemen lain di sekitarnya. Margin berada di luar border dan tidak berwarna. Margin dapat didefinisikan dengan menggunakan properti ```margin``` atau ```margin-top```, ```margin-right```, ```margin-bottom```, ```margin-left```.
 Cara implementasinya:
-```div {
+```
+div {
     margin: 10px;
 }
 ```
 
 2. Border digunakan untuk memberikan garis tepi pada elemen. Border berada di antara padding dan margin. Border dapat didefinisikan dengan menggunakan properti ```border``` atau ```border-top```, ```border-right```, ```border-bottom```, ```border-left```.
 Cara implementasinya:
-```div {
+```
+div {
     border: 5px solid black;
 }
 ```
 
 3. Padding digunakan untuk memberikan jarak antara elemen dengan border. Padding dapat didefinisikan dengan menggunakan properti ```padding``` atau ```padding-top```, ```padding-right```, ```padding-bottom```, ```padding-left```.
 Cara implementasinya:
-```div {
+```
+div {
     padding: 10px;
 }
 ```
@@ -167,7 +170,8 @@ Cara implementasinya:
 ***Jelaskan konsep flex box dan grid layout beserta kegunaannya!***
 1. Flexbox adalah teknik layouting CSS yang memungkinkan elemen di dalam container untuk menyesuaikan ukuran dan posisinya secara dinamis. Flexbox memungkinkan pengaturan layout yang responsif dan fleksibel, dengan mengatur elemen dalam satu dimensi (baris atau kolom) dan memungkinkan distribusi ruang secara merata. Flexbox sangat berguna untuk mengatur tata letak elemen dalam satu baris atau kolom, mengatur jarak antar elemen, dan mengatur posisi elemen secara fleksibel.
 Cara implementasinya:
-```div {
+```
+div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -175,7 +179,8 @@ Cara implementasinya:
 ```
 2. Grid layout adalah teknik layouting CSS yang memungkinkan elemen di dalam container untuk diatur dalam grid dua dimensi (baris dan kolom). Grid layout memungkinkan pengaturan layout yang kompleks dan terstruktur, dengan mengatur elemen dalam grid yang terdiri dari baris dan kolom. Grid layout sangat berguna untuk mengatur tata letak elemen dalam grid yang terstruktur, mengatur jarak antar elemen, dan mengatur posisi elemen secara presisi.
 Cara implementasinya:
-```div {
+```
+div {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 100px 100px;
@@ -183,3 +188,13 @@ Cara implementasinya:
 ```
 
 ***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!***
+1. Menerapkan Tailwind ke program
+Langkah: Membuka file ```base.html``` lalu tambahkan tag ```<meta name="viewport">```. Lalu, untuk menyambungkan dengan django, gunakan CDN dari tailwind dengan menambahkan ```<script src="https://cdn.tailwindcss.com"> </script>``` pada bagian head.
+2. Menambahkan fitur edit produk pada program
+Langkah: Tambahkan fungsi dengan nama ```edit_shop``` pada ```views.py``` yang menerima request dan mengembalikan form untuk mengedit produk. Lalu, buat template ```edit_shop.html``` yang berisi form untuk mengedit produk. Setelah itu, tambahkan path URL untuk edit produk pada ```urls.py``` dan tambahkan tombol edit pada halaman utama.
+3. Menambahkan fitur hapus produk pada program
+Langkah: Tambahkan fungsi dengan nama ```delete_shop``` pada ```views.py``` yang menerima request dan menghapus produk berdasarkan ID. Lalu, tambahkan path URL untuk hapus produk pada ```urls.py``` dan tambahkan tombol hapus pada halaman utama.
+4. Menambahkan navigation bar pada program
+Langkah: Buat file ```navbar.html``` yang berisi navigasi bar dengan link ke halaman main, edit produk, dan saat menambahkan produk, dengan menggunakan tag ```{% include 'navbar.html' %}```
+5. Modifikasi styles pada program dengan tailwind
+Langkah: Melakukan modifikasi pada setiap fitur di dalam program disesuaikan dengan fungsinya, hal ini dilakukan agar tampilan pada program menjadi lebih menarik dan mudah dipahami oleh pengguna.
