@@ -1,46 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>SeoulnSound</title>
+{% endblock meta %}
 {% block content %}
-<h1>Seoul n Sound</h1>
-
-<h5>Name:</h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ pbp_class }}<p>
-
+{% include 'navbar.html' %}
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col" style="background-color: #ffffff;">
+  <div class="p-2 mb-6 relative">
+    <div class="relative z-30">
+      <h1 class="font-bold text-4xl mb-2 text-black">Hey there, {{ name }}!</h1>
+    </div>
+  </div>
+    <div class="px-3 mb-4">
+      <div class="flex rounded-md items-center bg-indigo-600 py-2 px-4 w-fit" style="background-color: #d5e90b;">
+        <h1 class="text-black text-center">Last Login: {{last_login}}</h1>
+      </div>
+    </div>
+    <div class="flex justify-end mb-6">
+        <a href="{% url 'main:create_shop_entry' %}" class="bg-indigo-600 hover:bg-indigo-700 text-black font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" style="background-color: #d5e90b;">
+            Add New Shop Entry
+        </a>
+    </div>
+    
     {% if not shop_entries %}
-    <p>Belum ada data shop pada SeoulnSound.</p>
+    <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+        <img src="{% static 'image/sedih-banged.jpg' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+        <p class="text-center text-gray-600 mt-4">Belum ada data shop pada SeoulnSound.</p>
+    </div>
     {% else %}
-    <table>
-      <tr>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Rating</th>
-      </tr>
-    
-      {% comment %} Berikut cara memperlihatkan data shop di bawah baris ini 
-      {% endcomment %} 
-      {% for shop_entry in shop_entries %}
-      <tr>
-        <td>{{shop_entry.product_name}}</td>
-        <td>{{shop_entry.price}}</td>
-        <td>{{shop_entry.description}}</td>
-        <td>{{shop_entry.rating}}</td>
-      </tr>
-      {% endfor %}
-    </table>
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
+        {% for shop_entry in shop_entries %}
+            {% include 'card_shop.html' with shop_entry=shop_entry %}
+        {% endfor %}
+    </div>
     {% endif %}
-    
-    <br />
-    
-    <a href="{% url 'main:create_shop_entry' %}">
-      <button>Add New Shop Entry</button>
-    </a>
-
-    <a href="{% url 'main:logout' %}">
-      <button>Logout</button>
-    </a>
-
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    
+</div>
 {% endblock content %}

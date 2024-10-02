@@ -120,3 +120,66 @@ Langkah: Gunakan decorator ```@login_required``` pada fungsi yang menampilkan ha
 Langkah: Di dalam ```models.py```, kita akan menambahkan field user pada model sebagai ForeignKey yang mengarah ke model User, sehingga setiap produk bisa terkait dengan pengguna tertentu.
 6. Menampilkan informasi pengguna yang sedang login
 Langkah: Dalam fungsi ```show_main```, kita mengambil ```request.user``` untuk mendapatkan informasi pengguna yang sedang login dan menambahkannya ke dalam konteks yang dikirim ke template. Di template halaman utama, kita menambahkan kode untuk menampilkan nama pengguna, sehingga mereka dapat melihat siapa yang sedang login. Kita juga menggunakan cookies dan last login dengan menggunakan ```response.set_cookie('last_login', ...)``` untuk mengatur cookie tersebut. Kemudian, kita akan menampilkan informasi waktu login di halaman utama dengan mengambil nilai cookie ```last_login``` dan menambahkannya ke dalam konteks yang dikirim ke template.
+
+---
+
+# TUGAS 5
+***Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!***
+Urutan prioritas pengambilan CSS selector, yaitu
+1. Inline CSS: Inline CSS memiliki prioritas tertinggi, karena didefinisikan langsung di dalam elemen HTML. Inline CSS ditulis di dalam atribut style pada tag HTML, dan akan mengambil alih semua deklarasi CSS lainnya, kecuali penggunaan ```!important```.
+Contoh: ```<p style="color: red;">Ini adalah teks berwarna merah</p>```
+2. ID Selector: ID selector memiliki prioritas kedua tertinggi, karena ID bersifat unik dan hanya boleh digunakan sekali dalam satu halaman. ID selector ditandai dengan tanda pagar (#) diikuti dengan nama ID.
+Contoh: ```<p id="paragraf1">Ini adalah paragraf dengan ID paragraf1</p>```
+3. Class Selector: Class selector memiliki prioritas ketiga, karena class dapat digunakan berulang kali dalam satu halaman. Class selector ditandai dengan titik (.) diikuti dengan nama class.
+Contoh: ```<p class="important">Ini adalah paragraf penting</p>```
+4. Element Selector: Element selector berlaku untuk semua elemen dengan tag yang sama. Element selector hanya menggunakan nama tag HTML.
+Contoh: ```p { color: blue; }```
+5. Universal Selector: Universal selector berlaku untuk semua elemen dalam halaman. Universal selector ditandai dengan tanda bintang (*).
+Contoh: ```* { margin: 0; padding: 0; }```
+Jika dua selector memiliki tingkat kekhususan yang sama, aturan yang terakhir didefinisikan dalam stylesheet akan digunakan.
+
+***Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!***
+Responsive design menjadi konsep yang penting dalam pengembangan aplikasi web karena beberapa alasan. Pertama, dengan responsive design, aplikasi web dapat menyesuaikan tampilannya dengan berbagai ukuran layar, sehingga pengguna mendapatkan pengalaman yang optimal di perangkat dengan ukuran apapun. Hal ini memastikan bahwa konten dapat diakses dengan mudah oleh semua orang, pada semua perangkat. Yang kedua, Situs yang responsif dan dapat memberikan pengalaman pengguna yang baik akan lebih disukai banyak orang, responsive design yang berkontribusi pada SEO yang lebih baik, dapat membantu dalam peringkat pencarian, yang berarti lebih banyak pengunjung ke situs. Yang ketiga, penggunaan satu desain yang responsif juga mengurangi waktu dan usaha dalam pemeliharaan, karena kita tidak perlu membuat dan mengelola beberapa versi situs untuk berbagai perangkat. Terakhir, dengan semakin banyaknya pengguna yang mengakses web melalui perangkat mobile, responsive design memungkinkan aplikasi web untuk menjangkau audiens yang lebih luas.
+Contoh aplikasi yang sudah menerapkan responsive design adalah Google, Facebook, dan Twitter. Contoh aplikasi yang belum menerapkan responsive design adalah situs web berita atau blog yang tidak menyesuaikan tampilan dengan baik di perangkat mobile, sehingga pengguna harus melakukan zoom in dan out untuk membaca konten.
+
+***Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!***
+1. Margin digunakan untuk memberikan jarak antara elemen dengan elemen lain di sekitarnya. Margin berada di luar border dan tidak berwarna. Margin dapat didefinisikan dengan menggunakan properti ```margin``` atau ```margin-top```, ```margin-right```, ```margin-bottom```, ```margin-left```.
+Cara implementasinya:
+```div {
+    margin: 10px;
+}
+```
+
+2. Border digunakan untuk memberikan garis tepi pada elemen. Border berada di antara padding dan margin. Border dapat didefinisikan dengan menggunakan properti ```border``` atau ```border-top```, ```border-right```, ```border-bottom```, ```border-left```.
+Cara implementasinya:
+```div {
+    border: 5px solid black;
+}
+```
+
+3. Padding digunakan untuk memberikan jarak antara elemen dengan border. Padding dapat didefinisikan dengan menggunakan properti ```padding``` atau ```padding-top```, ```padding-right```, ```padding-bottom```, ```padding-left```.
+Cara implementasinya:
+```div {
+    padding: 10px;
+}
+```
+
+***Jelaskan konsep flex box dan grid layout beserta kegunaannya!***
+1. Flexbox adalah teknik layouting CSS yang memungkinkan elemen di dalam container untuk menyesuaikan ukuran dan posisinya secara dinamis. Flexbox memungkinkan pengaturan layout yang responsif dan fleksibel, dengan mengatur elemen dalam satu dimensi (baris atau kolom) dan memungkinkan distribusi ruang secara merata. Flexbox sangat berguna untuk mengatur tata letak elemen dalam satu baris atau kolom, mengatur jarak antar elemen, dan mengatur posisi elemen secara fleksibel.
+Cara implementasinya:
+```div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
+2. Grid layout adalah teknik layouting CSS yang memungkinkan elemen di dalam container untuk diatur dalam grid dua dimensi (baris dan kolom). Grid layout memungkinkan pengaturan layout yang kompleks dan terstruktur, dengan mengatur elemen dalam grid yang terdiri dari baris dan kolom. Grid layout sangat berguna untuk mengatur tata letak elemen dalam grid yang terstruktur, mengatur jarak antar elemen, dan mengatur posisi elemen secara presisi.
+Cara implementasinya:
+```div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 100px;
+}
+```
+
+***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!***

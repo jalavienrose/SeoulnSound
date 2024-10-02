@@ -2,7 +2,7 @@ import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core import serializers
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from main.forms import ShopEntryForm
 from main.models import Shop
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -84,3 +84,26 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_shop(request, id):
+    # Get shop entry berdasarkan id
+    shop = Shop.objects.get(pk = id)
+
+    # Set shop entry sebagai instance dari form
+    form = ShopEntryForm(request.POST or None, instance=shop)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_shop.html", context)
+
+def delete_shop(request, id):
+    # Get shop berdasarkan id
+    shop = Shop.objects.get(pk = id)
+    # Hapus shop
+    shop.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
