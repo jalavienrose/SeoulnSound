@@ -198,3 +198,86 @@ Langkah: Tambahkan fungsi dengan nama ```delete_shop``` pada ```views.py``` yang
 Langkah: Buat file ```navbar.html``` yang berisi navigasi bar dengan link ke halaman main, edit produk, dan saat menambahkan produk, dengan menggunakan tag ```{% include 'navbar.html' %}```
 5. Modifikasi styles pada program dengan tailwind
 Langkah: Melakukan modifikasi pada setiap fitur di dalam program disesuaikan dengan fungsinya, hal ini dilakukan agar tampilan pada program menjadi lebih menarik dan mudah dipahami oleh pengguna.
+
+---
+
+# TUGAS 6
+***Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!***
+Menggunakan Javascript dalam pengembangan aplikasi web dapat memberikan beberapa manfaat berikut:
+1. Interaktivitas: JavaScript memungkinkan pengembang untuk membuat elemen interaktif pada halaman web seperti tombol yang bisa diklik, validasi form, dan animasi. Hal ini meningkatkan pengalaman pengguna dan membuat aplikasi web lebih menarik.
+2. Pengembangan Single Page Applications (SPA): Framework JavaScript seperti React, Angular, dan Vue memungkinkan pembuatan aplikasi web yang hanya memuat satu halaman, di mana konten dapat diperbarui secara dinamis tanpa memuat ulang seluruh halaman.
+3. Integrasi API: JavaScript memungkinkan integrasi dengan layanan pihak ketiga melalui API (Application Programming Interface), memungkinkan aplikasi web untuk mengambil data dari berbagai sumber secara real-time.
+4. Pemrosesan di Client-Side: JavaScript berjalan di sisi klien (browser), sehingga dapat mengurangi beban pada server karena beberapa logika bisnis bisa dijalankan langsung di browser pengguna.
+5. Kompatibilitas Cross-Platform: JavaScript berjalan di semua browser modern, sehingga dapat digunakan untuk membangun aplikasi web yang dapat diakses oleh berbagai perangkat.
+
+***Jelaskan fungsi dari penggunaan ```await``` ketika kita menggunakan ```fetch()```! Apa yang akan terjadi jika kita tidak menggunakan ```await```?***
+Ketika kita menggunakan ```fetch()```, kita sering kali mengirim permintaan (request) ke server yang sifatnya asynchronous, artinya, permintaan tersebut membutuhkan waktu untuk diproses dan mengembalikan respons.
+
+Await digunakan untuk menunggu selesainya promise, dalam hal ini respons dari ```fetch()```. Dengan ```await```, eksekusi kode akan "menunggu" hingga data selesai diambil (respons diterima), sehingga kita bisa mengakses hasilnya dengan benar.
+
+Contoh:
+```
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
+console.log(data);
+```
+Di sini, kode akan menunggu hingga ```fetch()``` selesai dan respons JSON dapat diambil sebelum melanjutkan ke baris berikutnya.
+
+Jika kita tidak menggunakan await, ```fetch()``` akan mengembalikan promise yang belum diselesaikan, dan jika kita mencoba mengakses datanya langsung, kita akan mendapatkan undefined atau objek promise, bukan hasil yang sebenarnya.
+
+***Mengapa kita perlu menggunakan decorator ```csrf_exempt``` pada view yang akan digunakan untuk AJAX ```POST```?***
+```csrf_exempt``` digunakan untuk menonaktifkan proteksi CSRF (Cross-Site Request Forgery) pada view tertentu, biasanya pada request yang menggunakan AJAX POST.
+
+CSRF token merupakan mekanisme keamanan untuk memastikan bahwa POST request dilakukan oleh pengguna yang sah. Namun, dalam beberapa kasus, seperti ketika kita mengirim request melalui AJAX dari sumber yang kita percayai, kita bisa menonaktifkan verifikasi CSRF di view tersebut.
+```csrf_exempt``` digunakan jika kita sudah yakin bahwa request AJAX tersebut aman dan tidak memerlukan validasi CSRF (misalnya, jika hanya dipanggil dari halaman web yang dikendalikan penuh oleh aplikasi kita sendiri).
+Namun, perlu berhati-hati menggunakan ```csrf_exempt```, karena bisa menjadi celah keamanan jika request berasal dari sumber yang tidak aman.
+
+***Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?***
+Melakukan pembersihan data input pengguna di backend (server-side) adalah langkah penting untuk keamanan dan integritas data aplikasi. Alasan utamanya adalah:
+1. Keamanan: Pembersihan di backend melindungi dari berbagai serangan seperti injection attacks (SQL injection, XSS), di mana pengguna yang berbahaya mungkin mencoba memanipulasi input melalui permintaan yang tidak berasal dari frontend aplikasi kita.
+2. Kontrol Validasi: Backend memiliki kontrol penuh atas bagaimana data diproses dan divalidasi, sehingga memastikan bahwa semua data yang masuk ke sistem adalah valid dan sesuai aturan bisnis aplikasi.
+3. Tidak Semua Pengguna Menggunakan Frontend Kita: Pengguna bisa mengirimkan request langsung ke server tanpa melalui interface frontend, misalnya menggunakan curl atau tools lain. Jika validasi dan pembersihan hanya dilakukan di frontend, backend bisa menerima data yang berbahaya atau tidak valid.
+
+Oleh karena itu, pembersihan di backend adalah langkah terakhir untuk memastikan keamanan dan integritas data, meskipun frontend juga bisa melakukan validasi dasar seperti format input atau batasan panjang karakter untuk meningkatkan pengalaman pengguna.
+
+***Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!***
+1. Menambahkan Error Message pada Login
+- Pertama, lakukan pengecekan apakah form login valid menggunakan ```form.is_valid()```. Jika tidak valid, kita ingin memberikan pesan kesalahan kepada pengguna.
+- Pada view ```login_user```, tambahkan conditional yang mengecek validitas form. Jika valid, lakukan login seperti biasa; jika tidak, gunakan ```messages.error()``` untuk menampilkan pesan kesalahan ke pengguna.
+- Ini memungkinkan pengguna mengetahui bahwa ada masalah pada login, misalnya username atau password yang salah.
+- Pastikan pesan ini ditampilkan di halaman login menggunakan ```{% if messages %}``` di template login.
+
+2. Membuat Fungsi AJAX untuk Menambahkan Mood
+- Langkah berikutnya adalah menambahkan fungsi baru pada views, misalnya ```add_mood_entry_ajax```, yang menangani permintaan POST dari form mood entry.
+- Agar fungsi ini bisa berjalan tanpa mengecek CSRF token (karena AJAX sering digunakan di frontend), tambahkan decorator ```@csrf_exempt```.
+- Di dalam fungsi tersebut, ambil data dari ```request.POST``` untuk field mood, perasaan, dan intensitas mood. Setelah itu, simpan data tersebut dalam model yang sesuai.
+- Jangan lupa mengembalikan respons yang menunjukkan bahwa entri berhasil ditambahkan (```HttpResponse(b"CREATED", status=201)```).
+
+3. Menambahkan Routing untuk Fungsi AJAX
+- Selanjutnya, impor fungsi AJAX yang sudah dibuat ke dalam ```urls.py```.
+Tambahkan path baru di ```urlpatterns``` yang mengarahkan ke fungsi ini, sehingga request dapat mencapai view.
+
+4. Menggunakan ```fetch()``` untuk Menampilkan Data Mood
+- Pada halaman template utama, kamu tidak lagi mengambil entri mood secara langsung dari views, melainkan menggunakan fetch API untuk mendapatkan data dari endpoint JSON.
+- Buatlah fungsi JavaScript bernama ```getMoodEntries``` yang menggunakan ```fetch()``` untuk mengambil data mood secara asynchronous.
+- Setelah data didapatkan, lakukan parsing data JSON ke objek JavaScript agar bisa digunakan untuk menampilkan entri mood dalam bentuk HTML.
+
+5. Menampilkan Data Mood dengan JavaScript
+- Tambahkan sebuah div kosong dengan ID seperti ```mood_entry_cards``` di mana data mood akan dimuat.
+- Gunakan JavaScript untuk mengisi div ini dengan data yang telah di-fetch menggunakan fungsi seperti ```refreshMoodEntries```.
+- Pastikan untuk merender entri mood dalam bentuk kartu atau elemen HTML lain yang sesuai dengan desain aplikasi.
+
+6. Menambahkan Modal untuk Form Mood
+- Buat modal untuk form penambahan mood baru di halaman utama. Modal ini akan menampilkan form yang disubmit menggunakan AJAX.
+- Form tersebut sebaiknya tidak langsung melakukan pengiriman data ke server secara tradisional, tapi menggunakan JavaScript untuk menangani pengiriman data (memanfaatkan ```FormData```).
+
+7. Menggunakan AJAX untuk Menambahkan Mood
+- Tambahkan fungsi JavaScript ```addMoodEntry``` yang menggunakan ```fetch()``` untuk mengirim data form ke server melalui AJAX.
+- Data form diambil dengan ```new FormData(document.querySelector('#moodEntryForm'))```.
+- Setelah pengiriman berhasil, panggil kembali ```refreshMoodEntries``` untuk memperbarui daftar mood tanpa me-reload halaman.
+
+8. Melindungi Aplikasi dari XSS
+- Untuk mencegah Cross Site Scripting (XSS), gunakan ```strip_tags``` pada sisi backend. Ini bisa dilakukan dengan menambahkan fungsi ```strip_tags()``` pada view ```add_mood_entry_ajax``` agar HTML tags dihilangkan dari input pengguna.
+- Di bagian form, tambahkan validasi untuk membersihkan data input mood dan feelings dengan method ```clean_mood()``` dan ```clean_feelings()``` pada form model.
+- Untuk data lama yang mungkin sudah "kotor", gunakan DOMPurify di sisi frontend. Tambahkan library DOMPurify di template dan lakukan pembersihan data saat menampilkan entri mood di halaman utama.
+- Pastikan bahwa setiap kali data ditampilkan di frontend, DOMPurify sudah mem-filter semua tag HTML yang berpotensi menjalankan kode berbahaya.
